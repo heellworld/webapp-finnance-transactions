@@ -1,0 +1,159 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    padding: 15px;
+    background-color: #007bff;
+    color: #fff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.feedback {
+    color: red;
+    font-size: 12px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.badge.active {
+    background-color: #28a745;
+}
+
+.badge.overdue {
+    background-color: #dc3545;
+}
+
+.badge.secondary {
+    background-color: #6c757d;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Payment Button Stypes */
+.custom-payment-container {
+    position: fixed; /* Định vị cố định để di chuyển theo ý muốn */
+    top: 20px; /* Cách phía trên 20px */
+    right: 20px; /* Cách phía phải 10px */
+    display: flex;
+    justify-content: flex-end; /* Đẩy nút sang phải */
+    z-index: 1000; /* Đảm bảo nút hiển thị trên các phần tử khác */
+}
+
+.custom-payment-button {
+    background-color: #A1C038; /* Màu nền nút */
+    color: #FFFFFF; /* Màu chữ */
+    border: none; /* Loại bỏ viền mặc định */
+    border-radius: 30px; /* Bo góc */
+    padding: 10px 20px; /* Khoảng cách bên trong nút */
+    font-size: 14.4px; /* Kích thước chữ */
+    cursor: pointer; /* Con trỏ dạng pointer khi hover */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa icon và chữ */
+    transition: background-color 0.3s ease; /* Hiệu ứng mượt khi hover */
+    text-decoration: none; /* Loại bỏ gạch chân (nếu có) */
+}
+
+.custom-payment-button:hover {
+    background-color: #89A32D; /* Màu nền khi hover */
+}
+
+.custom-payment-icon {
+    width: 20px; /* Kích thước icon */
+    height: 20px;
+}
+
+.custom-payment-text {
+    font-weight: bold; /* Chữ đậm */
+}

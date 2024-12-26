@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Thanh Toán</title>
+    <link rel="icon" href="https://www.vietcombank.com.vn/-/media/Default-Website/Default-Images/Icons/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../static/css/transactions.css">
+</head>
+<body>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message|e }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h2>Thanh Toán Khoản Vay</h2>
+
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" id="paymentForm">
+                    {{ form.csrf_token }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="borrower_account">Tài khoản người trả nợ</label>
+                                {{ form.borrower_account(
+                                    class="form-control" + (" is-invalid" if form.borrower_account.errors else ""),
+                                    value=current_user.bank_account if current_user.bank_account else '',
+                                    readonly=true
+                                ) }}
+                                <!-- Thêm hidden field để đảm bảo giá trị luôn được gửi lên server -->
+                                <input type="hidden" name="borrower_account" value="{{ current_user.bank_account }}">
+                                <small>Số dư: <span id="borrowerBalance">{{ "{:,.0f}".format(current_user.bank_balance|default(0)) }}</span> VND</small>
+                                {% if form.borrower_account.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.borrower_account.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lender_account">Tài khoản người nhận</label>
+                                {{ form.lender_account(
+                                    class="form-control" + (" is-invalid" if form.lender_account.errors else ""),
+                                    placeholder="Nhập số tài khoản người nhận"
+                                ) }}
+                                <small>Họ tên: <span id="lenderName"></span></small>
+                                {% if form.lender_account.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.lender_account.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">Số tiền thanh toán</label>
+                        {{ form.amount(
+                            class="form-control" + (" is-invalid" if form.amount.errors else ""),
+                            placeholder="Nhập số tiền thanh toán"
+                        ) }}
+                        {% if form.amount.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.amount.errors %}{{ error|e }}{% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="confirmPayment" required>
+                        <label class="form-check-label" for="confirmPayment">
+                            Tôi xác nhận thông tin thanh toán là chính xác
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn">Thực hiện thanh toán</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Khoản Vay Cần Thanh Toán</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-container table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Người Cho Vay</th>
+                                <th>Số TK Người Cho Vay</th>
+                                <th>Số Tiền Vay</th>
+                                <th>Còn Lại</th>
+                                <th>Ngày Vay</th>
+                                <th>Ngày Đến Hạn</th>
+                                <th>Trạng Thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if active_loans %}
+                                {% for loan in active_loans %}
+                                <tr data-lender-account="{{ loan.lender.bank_account }}" class="loan-row">
+                                    <td>{{ loan.lender.name }}</td>
+                                    <td>{{ loan.lender.bank_account }}</td>
+                                    <td>{{ "{:,.0f}".format(loan.amount) }} VND</td>
+                                    <td>{{ "{:,.0f}".format(loan.remaining_amount) }} VND</td>
+                                    <td>{{ loan.loan_created_at.strftime('%d/%m/%Y') }}</td>
+                                    <td>{{ loan.due_date.strftime('%d/%m/%Y') }}</td>
+                                    <td>
+                                        <span class="badge {% if loan.status.value == 'active' %}active{% elif loan.status.value == 'overdue' %}overdue{% else %}secondary{% endif %}">
+                                            {{ loan.status.value.capitalize() }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="7" class="text-center">Không có khoản vay nào cần thanh toán.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="custom-payment-container">
+        <form class="custom-payment-form" action="/transactions" method="get" novalidate>
+            <button type="submit" class="custom-payment-button">
+                <div class="payment-icon-text">
+                    <span class="custom-payment-text">Tạo giao dịch mới</span>
+                </div>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Thêm sự kiện click cho các dòng trong bảng
+        document.querySelectorAll('.loan-row').forEach(row => {
+            row.addEventListener('click', function() {
+                const lenderAccount = this.dataset.lenderAccount;
+                document.querySelector('#lender_account').value = lenderAccount;
+                document.querySelector('#lenderName').textContent = this.cells[0].textContent;
+            });
+        });
+ 
+        // Format số tiền khi nhập
+        document.querySelector('#amount').addEventListener('input', function(e) {
+            let value = this.value.replace(/[^0-9]/g, '');
+            if (value) {
+                value = parseInt(value, 10).toLocaleString('vi-VN');
+                this.value = value;
+            }
+        });
+    </script>
+</body>
+</html>

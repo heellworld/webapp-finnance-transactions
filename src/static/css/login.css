@@ -1,0 +1,144 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+/* General styles */
+body.login-page {
+    margin: 0;
+    padding: 0;
+    font-family:  "Manrope Medium", sans-serif;
+    background-image: url('https://www.vietcombank.com.vn/-/media/Project/VCB-Sites/VCB/Home-page/KHCN/Merry-Xmas-and-Happy-New-year-2025/Banner-web/Tieng-Viet/1920x1080_xanh-TV-min.jpg?h=1080&w=1920&ts=00010101000000&hash=D19D122538F0E26D8A6264C0F2799D73');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Header logo */
+#header-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.logo-login {
+    width: 120px;
+}
+
+/* Login form container */
+#login-form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateX(-30%);
+}
+
+/* Login title */
+.login-title h1 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    color: #00695c;
+}
+
+.login-title h3 {
+    margin: 0 0 30px;
+    font-size: 18px;
+    color: #00897b;
+}
+
+/* Search bar */
+.search-bar ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+.search-bar li {
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Error messages */
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Register and Forget password links */
+.register-forgetpass ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.register-forgetpass a {
+    text-decoration: none;
+    color: #00695c;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.register-forgetpass a:hover {
+    text-decoration: underline;
+}
+
+/* Submit button */
+vcb-button button {
+    width: 100%;
+    padding: 10px;
+    background-color: #00695c;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+vcb-button button:hover {
+    background-color: #004d40;
+}
+
+/* Flash messages */
+.messages div {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+}
+
+.messages .success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+}

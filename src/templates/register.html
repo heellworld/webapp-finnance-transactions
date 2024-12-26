@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VCB Đăng Ký</title>
+    <link rel="icon" href="https://www.vietcombank.com.vn/-/media/Default-Website/Default-Images/Icons/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../static/css/register.css">
+</head>
+<body class="register-page">
+    <!-- Header Logo -->
+    <div id="header-logo">
+        <img class="logo-register" src="https://vcbdigibank.vietcombank.com.vn/assets/media/brand/logo.svg" alt="logo vietcombank xanh">
+    </div>
+
+    <!-- Register Form -->
+    <div id="register-form">
+        <div class="register-title">
+            <h1>Đăng ký tài khoản Vietcombank</h1>
+            <h3>Kính chào quý khách</h3>
+        </div>
+        
+        <!-- Form gửi thông tin đăng ký -->
+        <form class="register" action="/register" method="post" novalidate>
+            {{ form.csrf_token }}
+            <div class="search-bar">
+                <ul>
+                    <!-- Họ tên -->
+                    <li>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            placeholder="Họ và tên" 
+                            required>
+                        {% if form.name.errors %}
+                            <span class="error">{{ form.name.errors[0] }}</span>
+                        {% endif %}
+                    </li>
+                    <!-- Email -->
+                    <li>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="Email" 
+                            required>
+                        {% if form.email.errors %}
+                            <span class="error">{{ form.email.errors[0] }}</span>
+                        {% endif %}
+                    </li>
+                    <!-- Mật khẩu -->
+                    <li>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Mật khẩu" 
+                            required>
+                        {% if form.password.errors %}
+                            <span class="error">{{ form.password.errors[0] }}</span>
+                        {% endif %}
+                    </li>
+                    <!-- Số tài khoản ngân hàng -->
+                    <li>
+                        <input 
+                            type="text" 
+                            id="bank_account" 
+                            name="bank_account" 
+                            placeholder="Số tài khoản ngân hàng" 
+                            required>
+                        {% if form.bank_account.errors %}
+                            <span class="error">{{ form.bank_account.errors[0] }}</span>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Submit Button -->
+            <vcb-button>
+                <button type="submit" aria-label="Đăng ký">Đăng ký</button>
+            </vcb-button>
+        </form>
+
+        <!-- Hiển thị thông báo -->
+        <div class="messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="{{ category }}">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</body>
+</html>

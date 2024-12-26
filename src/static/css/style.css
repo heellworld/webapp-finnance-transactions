@@ -1,0 +1,255 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Manrope Medium", sans-serif;
+    color: #FFFFFF;
+    background-image: url('https://www.vietcombank.com.vn/-/media/Project/VCB-Sites/VCB/Home-page/KHCN/Bat-chat-YouPro/BANNER-WEB-1920X1080-anh-tinh.jpg?h=1114&w=1980&ts=20240917102425&hash=D63F659C1D0A4FB12035D53FC714B4D6');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Top bar styles */
+#top-bar {
+    margin: 15px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#top-bar ul {
+    list-style-type: none;
+    display: flex;
+    gap: 10.8px;
+}
+
+
+#top-bar a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 14.4px;
+    padding: 0px 10.8px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#top-bar a:hover {
+    background-color: #FFFFFF;
+    color: #007B3E;
+}
+
+.hotline {
+    margin-right: 5px;
+}
+
+.hotline ul li:hover {
+    background-color: #FFFFFF;
+    color: #007B3E;
+}
+
+#top-bar::after {
+    content: "";
+    display: block;
+    height: 2px;
+    background-color: #FFFFFF;
+    margin-top: 5px;
+}
+
+/* Main section styles */
+#main-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 100px;
+}
+
+/* logo Vietcombank styles */
+.logo-container img {
+    max-width: 200px;
+    height: auto;
+}
+
+/* Search Form  styles */
+.search-form {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    transform: translateX(-500px); /* Dịch chuyển sang trái */
+    margin-top: 25px; /* Di chuyển xuống dưới 5px */
+}
+
+.dropdown-menus {
+    display: flex;
+    justify-content: space-between;
+    gap: 25x;
+}
+
+.dropdown-menus select {
+    padding: 0px;
+    font-size: 14.4px;
+    color: #FFFFFF; /* Màu chữ */
+    background-color: transparent; /* Nền trong suốt */
+    border: none; /* Loại bỏ viền mặc định */
+    border-bottom: 2px solid transparent; /* Không hiển thị viền mặc định */
+    transition: border-color 0.3s ease; /* Hiệu ứng mượt khi hover */
+    appearance: none; /* Ẩn mũi tên mặc định của trình duyệt (tùy chọn) */
+}
+
+.dropdown-menus select:hover,
+.dropdown-menus select:focus {
+    border-bottom: 2px solid #A1C038; /* Viền màu xanh khi hover hoặc focus */
+    outline: none; /* Loại bỏ outline mặc định */
+    background-color: transparent; /* Nền vẫn trong suốt khi focus */
+}
+
+.dropdown-menus select option {
+    background-color: #000000; /* Nền của các mục trong dropdown */
+    color: #FFFFFF; /* Màu chữ */
+}
+
+.dropdown-menus select option:hover {
+    background-color: rgba(161, 192, 56, 0.2); /* Màu nền mờ khi hover vào từng option */
+}
+
+
+/* Search-bar Stypes */
+#search-section {
+    margin-top: 120px;
+    margin-left: 90px;
+    width: 42%;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    position: relative; /* Để định vị tuyệt đối phần tử bên trong */
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 12px 40px 12px 12px; /* Tạo không gian bên phải cho biểu tượng */
+    font-size: 14.4px;
+    border-radius: 20px;
+    border: none;
+}
+
+.search-bar button {
+    position: absolute; /* Đặt nút trong input */
+    right: 10px; /* Căn bên phải của input */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    transform: translateY(-50%); /* Đẩy nút lên để cân đối */
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.search-bar button img {
+    width: 20px;
+    height: 20px;
+    pointer-events: none; /* Ngăn ảnh nhận sự kiện chuột */
+}
+
+/* Login Button Stypes */
+.custom-login-container {
+    position: fixed; /* Định vị cố định để di chuyển theo ý muốn */
+    top: 60px; /* Cách phía trên 20px */
+    right: 220px; /* Cách phía phải 10px */
+    display: flex;
+    justify-content: flex-end; /* Đẩy nút sang phải */
+    z-index: 1000; /* Đảm bảo nút hiển thị trên các phần tử khác */
+}
+
+.custom-login-button {
+    background-color: #A1C038; /* Màu nền nút */
+    color: #FFFFFF; /* Màu chữ */
+    border: none; /* Loại bỏ viền mặc định */
+    border-radius: 20px; /* Bo góc */
+    padding: 10px 20px; /* Khoảng cách bên trong nút */
+    font-size: 14.4px; /* Kích thước chữ */
+    cursor: pointer; /* Con trỏ dạng pointer khi hover */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa icon và chữ */
+    transition: background-color 0.3s ease; /* Hiệu ứng mượt khi hover */
+    text-decoration: none; /* Loại bỏ gạch chân (nếu có) */
+}
+
+.custom-login-button:hover {
+    background-color: #89A32D; /* Màu nền khi hover */
+}
+
+.custom-login-icon {
+    width: 20px; /* Kích thước icon */
+    height: 20px;
+}
+
+.custom-login-text {
+    font-weight: bold; /* Chữ đậm */
+}
+
+/* Footer section styles */
+#footer {
+    margin-top: 70px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 42%;
+    margin-left: 90px;
+}
+
+.quick-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.quick-links ul li:hover {
+    background-color: #FFFFFF;
+    color: #007B3E;
+}
+
+/* Logo ChatbotAI Container */
+.custom-bot-form {
+    position: fixed; /* Định vị cố định để di chuyển theo ý muốn */
+    bottom: 30px; /* Cách phía trên 20px */
+    right: 10px; /* Cách phía phải 10px */
+    display: flex;
+    justify-content: flex-end; /* Đẩy nút sang phải */
+    z-index: 1000; /* Đảm bảo nút hiển thị trên các phần tử khác */
+}
+
+.custom-bot-button {
+    background-color: #A1C038; /* Màu nền nút */
+    color: #FFFFFF; /* Màu chữ */
+    border: none; /* Loại bỏ viền mặc định */
+    border-radius: 30px; /* Bo góc */
+    padding: 10px 10px; /* Khoảng cách bên trong nút */
+    font-size: 14.4px; /* Kích thước chữ */
+    cursor: pointer; /* Con trỏ dạng pointer khi hover */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa icon và chữ */
+    transition: background-color 0.3s ease; /* Hiệu ứng mượt khi hover */
+    text-decoration: none; /* Loại bỏ gạch chân (nếu có) */
+}
+
+.custom-bot-button:hover {
+    background-color: #89A32D; /* Màu nền khi hover */
+}
+
+.custom-bot-icon {
+    width: 30px; /* Kích thước icon */
+    height: 30px;
+}
+
+.custom-bot-text {
+    font-weight: bold; /* Chữ đậm */
+}

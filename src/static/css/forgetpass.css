@@ -1,0 +1,13 @@
+body {
+    font-family: "Manrope Medium", sans-serif;
+    color: #000000CC;
+    background-image: url('https://media.stickerswiki.app/trollfaces/6691307.512.webp');
+    background-size: 50%;
+    background-repeat: no-repeat;
+}
+
+body h1 {
+    margin: 0 0 30px;
+    font-size: 30px;
+    color: #00897b;
+}

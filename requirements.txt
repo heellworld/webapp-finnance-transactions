@@ -1,0 +1,10 @@
+streamlit
+pandas
+Pillow
+boto3
+flask
+flask-login
+flask-sqlalchemy
+flask-mail
+werkzeug
+numpy

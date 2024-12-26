@@ -1,0 +1,115 @@
+/* General styles */
+body.register-page {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('https://cdn.mobilecity.vn/mobilecity-vn/images/2024/03/hinh-nen-powerpoint-xanh-la-3.jpg.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Header logo */
+#header-logo {
+    position: absolute;
+    top: 20px;
+    left: 200px;
+}
+
+.logo-register {
+    width: 200px;
+}
+
+/* Register form container */
+#register-form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateX(-20%);
+}
+
+/* Register title */
+.register-title h1 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    color: #00695c;
+}
+
+.register-title h3 {
+    margin: 0 0 30px;
+    font-size: 18px;
+    color: #00897b;
+}
+
+/* Search bar */
+.search-bar ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+}
+
+.search-bar li {
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Error messages */
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Submit button */
+vcb-button button {
+    width: 100%;
+    padding: 10px;
+    background-color: #00695c;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+vcb-button button:hover {
+    background-color: #004d40;
+}
+
+/* Flash messages */
+.messages div {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+}
+
+.messages .success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+}

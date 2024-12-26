@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VCB Đăng Nhập</title>
+    <link rel="icon" href="https://www.vietcombank.com.vn/-/media/Default-Website/Default-Images/Icons/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../static/css/login.css">
+</head>
+<body class="login-page">
+    <!-- Header Logo -->
+    <div id="header-logo">
+        <img class="logo-login" src="https://vcbdigibank.vietcombank.com.vn/assets/media/brand/logo.svg" alt="logo vietcombank xanh">
+    </div>
+
+    <!-- Login Form -->
+    <div id="login-form">
+        <div class="login-title">
+            <h1>Đăng nhập vào tài khoản Vietcombank</h1>
+            <h3>Kính chào quý khách</h3>
+        </div>
+        
+        <!-- Form gửi thông tin đăng nhập -->
+        <form class="login" action="{{ url_for('login') }}" method="post" novalidate>
+            {{ form.csrf_token }}
+            <div class="search-bar">
+                <ul>
+                    <!-- Email -->
+                    <li>
+                        {{ form.email(id="search-input", placeholder="Xác nhận email", aria_label="Email") }}
+                        {% if form.email.errors %}
+                            {% for error in form.email.errors %}
+                                <span class="error">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </li>
+
+                    <!-- Mật khẩu -->
+                    <li>
+                        {{ form.password(id="search-input", placeholder="Mật khẩu", aria_label="Mật khẩu") }}
+                        {% if form.password.errors %}
+                            {% for error in form.password.errors %}
+                                <span class="error">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Đăng ký và Quên mật khẩu -->
+            <div class="register-forgetpass">
+                <ul>
+                    <li>
+                        <a href="{{ url_for('register') }}" aria-label="Đăng ký">Tôi chưa có tài khoản</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('forgetpass') }}" aria-label="Quên mật khẩu">Quên mật khẩu</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Submit Button -->
+            <vcb-button>
+                <button type="submit" aria-label="Đăng nhập">Đăng nhập</button>
+            </vcb-button>
+        </form>
+
+        <!-- Hiển thị thông báo -->
+        <div class="messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="{{ category }}">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Giao Dịch</title>
+    <link rel="icon" href="https://www.vietcombank.com.vn/-/media/Default-Website/Default-Images/Icons/favicon.ico" type="image/x-icon">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/transactions.css">
+</head>
+<body>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h2>Tạo Giao Dịch Vay Mượn</h2>
+
+        <!-- Form tạo giao dịch -->
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" id="transactionForm">
+                    {{ form.csrf_token }}
+
+                    <div class="row">
+                        <!-- Thông tin người cho vay -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lender_account">Tài khoản người cho vay</label>
+                                {{ form.lender_account(class="form-control" + (" is-invalid" if form.lender_account.errors else ""), value=user.bank_account, readonly=true) }}
+                                <small>Số dư: <span id="lenderBalance">{{ "{:,.0f}".format(user.bank_balance) }}</span> VND</small>
+                                {% if form.lender_account.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.lender_account.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Thông tin người đi vay -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="borrower_account">Tài khoản người vay</label>
+                                {{ form.borrower_account(class="form-control" + (" is-invalid" if form.borrower_account.errors else "")) }}
+                                <small>Họ tên: <span id="borrowerName"></span></small>
+                                {% if form.borrower_account.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.borrower_account.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Số tiền vay -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="amount">Số tiền vay</label>
+                                {{ form.amount(class="form-control" + (" is-invalid" if form.amount.errors else "")) }}
+                                {% if form.amount.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.amount.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Ngày đến hạn -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="due_date">Ngày đến hạn</label>
+                                {{ form.due_date(class="form-control" + (" is-invalid" if form.due_date.errors else ""), type="date") }}
+                                {% if form.due_date.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.due_date.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Checkbox xác nhận giao dịch -->
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="confirmTransaction" name="confirmTransaction" required>
+                            <label class="form-check-label" for="confirmTransaction">
+                                Tôi xác nhận rằng thông tin giao dịch là chính xác.
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Tạo Giao Dịch</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Danh sách khoản vay đã cho vay -->
+        <div class="card">
+            <div class="card-header">
+                <h4>Khoản Vay Đã Cho Vay</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Người Vay</th>
+                                <th>Số Tiền</th>
+                                <th>Còn Lại</th>
+                                <th>Ngày Vay</th>
+                                <th>Ngày Đến Hạn</th>
+                                <th>Trạng Thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for loan in loans_given %}
+                            <tr>
+                                <td>{{ loan.borrower.name }}</td>
+                                <td>{{ "{:,.0f}".format(loan.amount) }} VND</td>
+                                <td>{{ "{:,.0f}".format(loan.remaining_amount) }} VND</td>
+                                <td>{{ loan.loan_created_at.strftime('%d/%m/%Y') }}</td>
+                                <td>{{ loan.due_date.strftime('%d/%m/%Y') }}</td>
+                                <td>
+                                    <span class="badge {% if loan.status.value == 'active' %}active{% elif loan.status.value == 'overdue' %}overdue{% else %}secondary{% endif %}">
+                                        {{ loan.status.value.capitalize() }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danh sách khoản vay đã mượn -->
+        <div class="card">
+            <div class="card-header">
+                <h4>Khoản Vay Đã Mượn</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Người Cho Vay</th>
+                                <th>Số Tiền</th>
+                                <th>Còn Lại</th>
+                                <th>Ngày Vay</th>
+                                <th>Ngày Đến Hạn</th>
+                                <th>Trạng Thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for loan in loans_received %}
+                            <tr>
+                                <td>{{ loan.lender.name }}</td>
+                                <td>{{ "{:,.0f}".format(loan.amount) }} VND</td>
+                                <td>{{ "{:,.0f}".format(loan.remaining_amount) }} VND</td>
+                                <td>{{ loan.loan_created_at.strftime('%d/%m/%Y') }}</td>
+                                <td>{{ loan.due_date.strftime('%d/%m/%Y') }}</td>
+                                <td>
+                                    <span class="badge {% if loan.status.value == 'active' %}active{% elif loan.status.value == 'overdue' %}overdue{% else %}secondary{% endif %}">
+                                        {{ loan.status.value.capitalize() }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tạo nút chuyển sang thanh toán khoản nợ -->
+    <div class="custom-payment-container" aria-label="Payment Form">
+        <form class="custom-payment-form" action="/payments" method="GET" novalidate>
+            <button type="submit" class="custom-payment-button" aria-label="Thanh toán khoản nợ">
+                <div class="payment-icon-text">
+                    <img 
+                        src="https://png.pngtree.com/png-clipart/20230918/original/pngtree-fast-pay-logo-market-economy-cash-vector-png-image_12355750.png" 
+                        alt="Payment Icon" 
+                        width="30" 
+                        class="custom-payment-icon">
+                    <span class="custom-payment-text">Thanh toán khoản nợ</span>
+                </div>
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>
